@@ -6,7 +6,10 @@ import { UserContext } from "./UserContext";
 import reducer from "./reducer";
 
 function App() {
-  const [state, dispatch] = useReducer(reducer, { display: "", result: "" });
+  const [state, dispatch] = useReducer(reducer, {
+    display: "",
+    histories: [],
+  });
   return (
     <div>
       <UserContext.Provider value={{ state, dispatch }}>

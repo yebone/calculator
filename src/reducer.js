@@ -1,21 +1,29 @@
 const reducer = (state, { type, value }) => {
-  const { display } = state;
+  const { display, histories } = state;
+
   switch (type) {
     case "num":
-      return { display: display + value };
+      return { ...state, display: display + value };
+
     case "operator":
-      return { display: display + " " + value + " " };
-    case "calculate":
-      try {
-        eval(display);
-      } catch (error) {
-        return { display: display };
+      // we need to calculate % of the last number.
+      if (value === "%") {
+        let displayArr = display.trim().split(" ");
+        let number = Number(displayArr.pop());
+        if (!isNaN(number)) {
+          number = number / 100;
+          return { ...state, display: displayArr.join(" ") + number };
+        }
+        return state;
       }
-      return { display: eval(display) };
+      // for other operator just add to display with space
+      return { ...state, display: display + " " + value + " " };
+    case "calculate":
+      return { ...state, histories: [...histories, display], display: "" };
     case "clear":
-      return { display: "" };
+      return { ...state, display: "", histories: [] };
     case "delete":
-      return { display: display.trim().slice(0, -1) };
+      return { ...state, display: display.trim().slice(0, -1) };
     default:
       return state;
   }
