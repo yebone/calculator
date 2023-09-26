@@ -19,6 +19,9 @@ const reducer = (state, { type, value }) => {
       // for other operator just add to display with space
       return { ...state, display: display + " " + value + " " };
     case "calculate":
+      if (histories.length >= 4) {
+        histories.shift();
+      }
       return { ...state, histories: [...histories, display], display: "" };
     case "clear":
       return { ...state, display: "", histories: [] };

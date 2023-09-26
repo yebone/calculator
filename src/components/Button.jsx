@@ -9,7 +9,7 @@ const Button = ({ name, id }) => {
       value={name}
       id={id}
       onClick={(event) => dispatch({ type: id, value: event.target.value })}
-      className=" bg-cyan-300 border-2 border-cyan-500 px-6 py-3 m-3 rounded-lg"
+      className=" w-[23%] h-[77px] md:h-[88px] mb-2 bg-emerald-100 rounded-[20px] shadow-md active:bg-emerald-200"
     >
       {name}
     </button>

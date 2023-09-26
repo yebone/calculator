@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../UserContext";
+import History from "./History";
 
 const Display = () => {
   const {
@@ -8,10 +9,8 @@ const Display = () => {
   const [result, setResult] = useState("0");
 
   useEffect(() => {
-    console.log(histories);
     try {
       eval(display);
-      console.log(eval(display));
     } catch {
       return;
     }
@@ -21,9 +20,7 @@ const Display = () => {
 
     try {
       eval(histories[histories.length - 1]);
-      console.log("histories", eval(histories[histories.length - 1]));
     } catch (error) {
-      console.log(error);
       return;
     }
     if (eval(histories[histories.length - 1]) !== undefined) {
@@ -34,18 +31,22 @@ const Display = () => {
   return (
     <div
       id="display"
-      className=" h-36  pr-5 mt-4 text-right bg-slate-300 flex-col items-center "
+      className=" h-40 pr-5 pt-3 text-right flex flex-col justify-between"
     >
-      {histories?.map((history, i) => {
-        return <h1 key={i}>{history}</h1>;
-      })}
-      <h1 id="operation" className=" text-lg font-semibold">
-        {display}
-      </h1>
-      <h1 id="result" className=" text-lg font-semibold">
-        {result !== "0" ? "=" : ""}
-        {result}
-      </h1>
+      <div className="">
+        {histories?.map((history, i) => {
+          return <History key={i} history={history} />;
+        })}
+      </div>
+      <div>
+        <h1 id="operation" className=" text-2xl font-semibold">
+          {display}
+        </h1>
+        <h1 id="result" className=" text-3xl font-semibold">
+          {result !== "0" ? "=" : ""}
+          {Number(result).toLocaleString()}
+        </h1>
+      </div>
     </div>
   );
 };
