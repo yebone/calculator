@@ -8,9 +8,10 @@ function App() {
   const [state, dispatch] = useReducer(reducer, {
     display: "",
     histories: [],
+    darkMode: false,
   });
   return (
-    <div>
+    <div className={`${state.darkMode ? "dark" : ""}`}>
       <UserContext.Provider value={{ state, dispatch }}>
         <MainDisplay />
       </UserContext.Provider>

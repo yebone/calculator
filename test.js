@@ -1,3 +1,3 @@
-const obj= {display:1, state:2}
+const arr = [1, 1, 2, 3];
 
-console.log(obj:{display});
+console.log(arr[arr.length - 1]);

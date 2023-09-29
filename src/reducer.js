@@ -1,32 +1,47 @@
 const reducer = (state, { type, value }) => {
-  const { display, histories } = state;
+  // destructuring for readable
+  const { display, histories, darkMode } = state;
+  // display to mutable arr cuz it made easy to just use in operation
+  let displayArr = display.trim().split(" ");
+  let lastElement = Number(displayArr[displayArr.length - 1]);
 
   switch (type) {
     case "num":
       return { ...state, display: display + value };
 
     case "operator":
-      // we need to calculate % of the last number.
-      if (value === "%") {
-        let displayArr = display.trim().split(" ");
-        let number = Number(displayArr.pop());
-        if (!isNaN(number)) {
-          number = number / 100;
-          return { ...state, display: displayArr.join(" ") + number };
-        }
+      // to avoid situation like ' + + - -'
+      if (isNaN(lastElement)) return state;
+      return { ...state, display: display + " " + value + " " };
+
+    case "percent":
+      // percentage of last number
+      if (!isNaN(lastElement)) {
+        lastElement = lastElement / 100;
+        return {
+          ...state,
+          display: displayArr.slice(0, -1).join(" ") + " " + lastElement,
+        };
+      }
+
+      return state;
+    case "dot":
+      if (!isNaN(lastElement)) {
         return state;
       }
-      // for other operator just add to display with space
-      return { ...state, display: display + " " + value + " " };
+      return { ...state, display: display + value };
+
     case "calculate":
-      if (histories.length >= 4) {
+      if (histories.length >= 3) {
         histories.shift();
       }
       return { ...state, histories: [...histories, display], display: "" };
     case "clear":
       return { ...state, display: "", histories: [] };
     case "delete":
-      return { ...state, display: display.trim().slice(0, -1) };
+      return { ...state, display: display.trim().slice(0, -1).trim() };
+    case "darkMode":
+      return { ...state, darkMode: !darkMode };
     default:
       return state;
   }

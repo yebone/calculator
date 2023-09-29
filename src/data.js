@@ -1,7 +1,7 @@
 const buttons = [
   { name: "C", id: "clear" },
   { name: "del", id: "delete" },
-  { name: "%", id: "operator" },
+  { name: "%", id: "percent" },
   { name: "/", id: "operator" },
 
   { name: 7, id: "num" },
@@ -19,9 +19,9 @@ const buttons = [
   { name: 3, id: "num" },
   { name: "+", id: "operator" },
 
-  { name: "L", id: "placeholder" },
+  { name: "L", id: "darkMode" },
   { name: 0, id: "num" },
-  { name: ".", id: "num" },
+  { name: ".", id: "dot" },
   { name: "=", id: "calculate" },
 ];
 
