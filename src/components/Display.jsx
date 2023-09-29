@@ -4,7 +4,7 @@ import History from "./History";
 
 const Display = () => {
   const {
-    state: { display, histories },
+    state: { display, histories, calculated },
   } = useContext(UserContext);
   const [result, setResult] = useState("0");
 
@@ -32,7 +32,7 @@ const Display = () => {
   return (
     <div
       id="display"
-      className=" h-40 pr-5 pt-3 dark:text-[#FFFFFF] text-right flex flex-col justify-between "
+      className=" h-44 md:h-48  pr-5 pt-3  dark:text-[#FFFFFF] text-right flex flex-col justify-between "
     >
       <div className="">
         {histories?.map((history, i) => {
@@ -40,14 +40,19 @@ const Display = () => {
         })}
       </div>
       <div>
-        <h1 id="operation" className=" text-2xl font-semibold">
+        <h1 id="operation" className=" text-xl md:text-2xl font-semibold">
           {display
             .trim()
             .split(" ")
             .map((e) => (isNaN(Number(e)) ? e : Number(e).toLocaleString()))
             .join(" ")}
         </h1>
-        <h1 id="result" className=" text-3xl font-semibold">
+        <h1
+          id="result"
+          className={` font-bold ${
+            calculated ? "text-4xl md:text-5xl " : "text-2xl md:text-3xl"
+          }`}
+        >
           {result !== "0" ? "=" : ""}
           {Number(result).toLocaleString()}
         </h1>

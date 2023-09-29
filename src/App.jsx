@@ -9,9 +9,10 @@ function App() {
     display: "",
     histories: [],
     darkMode: false,
+    calculated: false,
   });
   return (
-    <div className={`${state.darkMode ? "dark" : ""}`}>
+    <div className={`${state.darkMode ? "dark" : ""} h-full`}>
       <UserContext.Provider value={{ state, dispatch }}>
         <MainDisplay />
       </UserContext.Provider>

@@ -1,12 +1,15 @@
 const reducer = (state, { type, value }) => {
   // destructuring for readable
-  const { display, histories, darkMode } = state;
+  const { display, histories, darkMode, calculated } = state;
   // display to mutable arr cuz it made easy to just use in operation
   let displayArr = display.trim().split(" ");
   let lastElement = Number(displayArr[displayArr.length - 1]);
 
   switch (type) {
     case "num":
+      if (calculated) {
+        return { ...state, display: display + value, calculated: false };
+      }
       return { ...state, display: display + value };
 
     case "operator":
@@ -35,7 +38,12 @@ const reducer = (state, { type, value }) => {
       if (histories.length >= 3) {
         histories.shift();
       }
-      return { ...state, histories: [...histories, display], display: "" };
+      return {
+        ...state,
+        histories: [...histories, display],
+        display: "",
+        calculated: true,
+      };
     case "clear":
       return { ...state, display: "", histories: [] };
     case "delete":
